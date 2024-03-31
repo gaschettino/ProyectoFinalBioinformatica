@@ -42,4 +42,6 @@ ____
     * Paquetes: argparse, datetime, pandas, os y mygene
       * Para instalarlos ```pip install <Nombre del Paquete>```
   * **Ejemplo**
-      `python3 TablaDiseno_v1.0.py -i archivos/listado_beds.tsv`
+      ```
+      python3 TablaDiseno_v1.0.py -i archivos/listado_beds.tsv
+      ```
