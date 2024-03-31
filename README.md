@@ -23,7 +23,7 @@ ___
 ____
 
 
-* TablaVariantesCalidadClinVar
+* TablaDiseno
   * **Objetivo** 
     * Generar, a partir de un archivo tsv un archivo para importar en la base de datos la tabla Diseno.
   * **Input**                          _Correr el script con la opción --help para más detalles_
@@ -42,4 +42,4 @@ ____
     * Paquetes: argparse, datetime, pandas, os y mygene
       * Para instalarlos ```pip install <Nombre del Paquete>```
   * **Ejemplo**
-    `python3 TablaDiseno_v1.0.py -i archivos/listado_beds.tsv`
+      `python3 TablaDiseno_v1.0.py -i archivos/listado_beds.tsv`
