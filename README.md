@@ -19,7 +19,7 @@ ___
   * **Ejemplo para ingresar el path del archivo desde la terminal**
       ```
       bash VariantsToTable_v1.0.bash
-              Precionar Enter
+              Presionar Enter
       archivos/HG00405_degvcf_intervar.vcf
       ```
 
