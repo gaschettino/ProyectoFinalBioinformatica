@@ -173,6 +173,11 @@ if not args.paso3:
     
     df_tmp=df_concat.set.str.get_dummies(sep=',')
     df_concat=pd.concat([df_concat, df_tmp], axis=1, join="inner")
+    columnas_a_sumar = ["DeepVariant", "FreeBayes", "HaplotypeCaller", "Platypus", "SamTools"]
+    for columna in columnas_a_sumar:
+        if columna not in df_concat.columns:
+            df_concat[columna] = 0
+    
     df_concat["cantidad"]=df_concat[["DeepVariant","FreeBayes","HaplotypeCaller","Platypus","SamTools"]].sum(axis=1)
     del(df_tmp)
     
@@ -258,7 +263,7 @@ print(f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Tabla Variantes')
 tabla_variantes=pd.DataFrame(columns=["ref_build","cromosoma","posicion","referencia","alternativo","tipo","gen","id_clinvar","created_at"])
 tabla_variantes.ref_build=args.ref
 tabla_variantes.cromosoma=df_concat.CHROM.astype(str)
-tabla_variantes.posicion_start=df_concat.POS
+tabla_variantes.posicion=df_concat.POS
 
 tabla_variantes.referencia=df_concat.REF
 tabla_variantes.alternativo=df_concat.ALT
@@ -287,7 +292,7 @@ print(f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Tabla Calidades')
 
 tabla_calidades=pd.DataFrame(columns=["id_genomica","id_corrida","id_diseno","ref_build","cromosoma","posicion","referencia","alternativo","GT","reads_ref","reads_alt","DP","filter","haplotypecaller","freebayes","samtools","platypus","deepvariant","created_at"])
 
-tabla_calidades.id_genomica=df_concat.id_paciente
+tabla_calidades.id_genomica=df_concat.Patient
 tabla_calidades.id_corrida=df_concat.Corrida
 tabla_calidades.id_diseno=args.dis
 tabla_calidades.ref_build=args.ref
@@ -297,15 +302,15 @@ tabla_calidades.referencia=df_concat.REF
 tabla_calidades.alternativo=df_concat.ALT
 
 tabla_calidades.GT=df_concat.GT
-tabla_calidades.Reads_Ref=df_concat.Ref_depth.fillna(df_concat.RO).fillna(df_concat.NR.astype('float')-df_concat.NV.astype('float'))
-tabla_calidades.Reads_Alt=df_concat.Alt_depth.fillna(df_concat.AO).fillna(df_concat.NV)
+tabla_calidades.reads_ref=df_concat.Ref_depth.fillna(df_concat.RO).fillna(df_concat.NR.astype('float')-df_concat.NV.astype('float'))
+tabla_calidades.reads_alt=df_concat.Alt_depth.fillna(df_concat.AO).fillna(df_concat.NV)
 tabla_calidades.DP=df_concat.DP.fillna(df_concat.NR)
-tabla_calidades.Filter=df_concat.FILTER.str.replace(",","-")
-tabla_calidades.HaplotypeCaller=df_concat.HaplotypeCaller
-tabla_calidades.FreeBayes=df_concat.FreeBayes
-tabla_calidades.SamTools=df_concat.SamTools
-tabla_calidades.Platypus=df_concat.Platypus
-tabla_calidades.DeepVariant=df_concat.DeepVariant
+tabla_calidades.filter=df_concat.FILTER.str.replace(",","-")
+tabla_calidades.haplotypecaller=df_concat.HaplotypeCaller
+tabla_calidades.freebayes=df_concat.FreeBayes
+tabla_calidades.samtools=df_concat.SamTools
+tabla_calidades.platypus=df_concat.Platypus
+tabla_calidades.deepvariant=df_concat.DeepVariant
 
 filename=outputtablas + 'tabla_calidades-' + dt_string + '.csv'
 
