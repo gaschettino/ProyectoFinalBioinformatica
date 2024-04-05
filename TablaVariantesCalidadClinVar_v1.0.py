@@ -190,6 +190,10 @@ if not args.paso3:
     df_concat['Patient'] = df_concat['Patient'].str.split(r'[\\/]').str[-1]
     
     '''
+    Elimino el chr del campro cromosoma
+    '''
+    df_concat.CHROM=df_concat.CHROM.str.replace('chr', '')
+    '''
     Si quiero un archivo con todas las modificaciones.
     '''
     
@@ -260,9 +264,9 @@ print(f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Tabla Variantes')
 
 
 tabla_variantes=pd.DataFrame(columns=["ref_build","cromosoma","posicion","referencia","alternativo","tipo","gen","id_clinvar","created_at"])
-tabla_variantes.ref_build=args.ref
 tabla_variantes.cromosoma=df_concat.CHROM.astype(str)
 tabla_variantes.posicion=df_concat.POS
+tabla_variantes.ref_build=args.ref
 
 tabla_variantes.referencia=df_concat.REF
 tabla_variantes.alternativo=df_concat.ALT

@@ -1,0 +1,7 @@
+ref_build	cromosoma	posicion	referencia	alternativo	tipo	gen	id_clinvar	CLNHGVS	cantidad_pacientes	frecuencia
+hg38	3	16271057	C	T	SNP	OXNAD1	0	Dummy	96	100
+hg38	3	38039461	T	G	SNP	DLEC1	0	Dummy	96	100
+hg38	3	38366870	G	A	SNP	XYLB	0	Dummy	96	100
+hg38	3	42209837	C	T	SNP	TRAK1	1342260	NC_000003.12:g.42209837C>T	96	100
+hg38	3	42865620	A	C	SNP	ACKR2	0	Dummy	96	100
+
