@@ -16,6 +16,15 @@ ___
   * **Requerimientos**
     * Herramienta GATK4. 
     * Se debe agregar el path del archivo local.jar en el array tools del script.
+  * **Ejemplo para ingresar el path del archivo desde la terminal**
+      ```
+      bash VariantsToTable_v1.0.bash
+      Enter
+      archivos/HG00405_Step4_clinVar_subset_chr3.vcf
+      ```
+
+
+
 
 
 ____
@@ -79,7 +88,7 @@ ____
       * Para instalarlos ```pip install <Nombre del Paquete>```
   * **Ejemplo**
       ```
-      python3 TablaVariantesCalidadClinVar_v1.0.py -i archivos/listado_beds.tsv
+      python3 TablaVariantesCalidadClinVar_v1.0.py -i /mnt/c/Users/giovi/Desktop/AnotPFI/ -clinvar 240404 -dis 1
       ```
 
 
