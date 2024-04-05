@@ -20,7 +20,7 @@ ___
       ```
       bash VariantsToTable_v1.0.bash
       Enter
-      archivos/HG00405_Step4_clinVar_subset_chr3.vcf
+      archivos/HG00405_degvcf_intervar.vcf.vcf
       ```
 
 

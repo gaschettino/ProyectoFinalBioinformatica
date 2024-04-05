@@ -197,7 +197,6 @@ if not args.paso3:
         print(f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Se guarda el archivo del paso 2')    
         df_concat.to_csv(f"Paso2_pre_tablas_{dt_string}.csv",index=False)
 
-print('aca')
 print (f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Paso 3')
 
 '''
