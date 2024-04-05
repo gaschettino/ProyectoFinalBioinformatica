@@ -88,7 +88,7 @@ ____
       * Para instalarlos ```pip install <Nombre del Paquete>```
   * **Ejemplo**
       ```
-      python3 TablaVariantesCalidadClinVar_v1.0.py -i /mnt/c/Users/giovi/Desktop/AnotPFI/ -clinvar 240404 -dis 1
+      python3 TablaVariantesCalidadClinVar_v1.0.py -i /home/user/foo -clinvar 240404 -dis 1
       ```
 
 
