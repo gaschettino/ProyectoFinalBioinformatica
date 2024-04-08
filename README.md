@@ -4,9 +4,8 @@
 ___
 
 
-#### Scripts 
+<h2 align="center">Scripts</h2>
 
-___
 
 Esta sección proporciona una descripción de todos los scripts cargados en el repositorio.
 
@@ -185,11 +184,6 @@ ____
 ____
 
 
-#### Archivos
-
-___
-
-___
 <h2 align="center">Archivos</h2>
 
 
