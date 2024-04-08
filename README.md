@@ -1,4 +1,5 @@
-# Proyecto Final de Bioinformatica
+<h1 align="center">Proyecto Final de Bioinformática</h1>
+
 ## Desarrollo de una base de datos de variantes genéticas obtenidas a partir de ensayos de next generation sequencing en el Hospital Garrahan
 
 ___
@@ -189,8 +190,6 @@ ____
 
 Esta sección proporciona una descripción de los archivos contenidos en la carpeta archivos de este repositorio.
 ___
-
-Archivos iniciales:
 
 * Esquema_BD
   * Contiene el esquema de la base de datos diseñada.
