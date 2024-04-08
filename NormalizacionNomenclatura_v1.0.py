@@ -50,19 +50,28 @@ if not os.path.isfile(args.inputfile):
     print(f'##ERROR: No existe el archivo {args.inputfile}')
     exit()
 else:
-    panel=args.inputfile.split('resultado_')[1].split('.')[0]
+    filename=os.path.basename(args.inputfile).split('.', 1)[0]
 
 if args.outpath and os.path.exists(args.outpath):
-    filename=f"{args.outpath}/Resultado_{panel}_{date_file}.csv"
+    filename=f"{args.outpath}/{filename}_norm_{date_file}.csv"
     
 elif args.outpath:
     print (f"##ERROR: {args.outpath} no existe.")
     exit()
 else:
-    filename=f"{os.path.dirname(args.inputfile)}/Resultado_{panel}_{date_file}.csv"
+    filename=f"{os.path.dirname(args.inputfile)}/{filename}_norm_{date_file}.csv"
+
 
 variants = pd.read_csv(args.inputfile, sep='\t')
-variants["variante"] = 'GRCh38(chr' + variants['cromosoma'].astype(str) + '):g.' + variants['posicion_start'].astype(str) + variants['referencia'] + '>' + variants['alternativo']
+
+# Asumo que un mismo diseño siempre será analizado con el mismo genoma de referencia.
+if variants.ref_build.iloc[0] == 'hg38':
+    ref='GRCh38'
+    print('capta hg38')
+elif variants.ref_build == 'hg19':
+    ref='GRCh37'
+
+variants["variante"] = ref+'(chr' + variants['cromosoma'].astype(str) + '):g.' + variants['posicion'].astype(str) + variants['referencia'] + '>' + variants['alternativo']
 variants["HGVS"]=''  
 variants['CLNHGVS'] = variants['CLNHGVS'].apply(corregir_clnhgvs)
 

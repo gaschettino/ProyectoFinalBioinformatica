@@ -30,16 +30,18 @@ date_file=datetime.now().strftime("%Y%m%d_%H%M")
 if not os.path.isfile(args.inputfile):
     print(f'##ERROR: No existe el archivo {args.inputfile}')
     exit()
+else:
+    basename=os.path.basename(args.inputfile).split('.', 1)[0].split('_', 1)[0]
 
 if args.outpath and os.path.exists(args.outpath):
-    filename=f"{args.outpath}/Template_Lite_{date_file}.xlsx"
-    rejectedfile=f"{args.outpath}/Rejected_{date_file}.csv"    
+    filename=f"{args.outpath}/Template_Lite_{basename}_{date_file}.xlsx"
+    rejectedfile=f"{args.outpath}/Rejected_{basename}_{date_file}.csv"    
 elif args.outpath:
     print (f"##ERROR: {args.outpath} no existe.")
     exit()
 else:
-    filename=f"{os.path.dirname(args.inputfile)}/Template_Lite_{date_file}.xlsx"
-    rejectedfile=f"{args.outpath}/Rejected_{date_file}.csv"
+    filename=f"{os.path.dirname(args.inputfile)}/Template_Lite_{basename}_{date_file}.xlsx"
+    rejectedfile=f"{os.path.dirname(args.inputfile)}/Rejected_{basename}_{date_file}.csv"
     
 def limpiar_gen(valor):
     if '-' in valor:
@@ -59,7 +61,8 @@ Armo un archivo de variantes rechazadas que no podrán ser cargadas a ClinVar a 
 '''
 
 df_fail=df[df.HGVS.isna()]
-df_fail.to_csv(rejectedfile, index=False)    
+if len(df_fail) > 0:
+    df_fail.to_csv(rejectedfile, index=False)    
 
 '''
 Preparación del dataframe para cargar en el Templado
@@ -86,7 +89,7 @@ df_Variant.Preferred_condition_name="not specified"
 df_Variant.Clinical_significance="Benign"
 df_Variant.Date_last_evaluated=datetime.now().strftime("%Y-%m-%d")
 for row in range(0,len(df)):
-    df_Variant.Comment_CS[row]=f"This variant is classified as Benign based on local population frequency. This variant was detected in {df.frecuencia[row]}% of patients studied by a panel of primary immunodeficiencies. Number of patients: {df.n_pacientes[row]}. Only high quality variants are reported."
+    df.loc[row, "Comment_CS"]=f"This variant is classified as Benign based on local population frequency. This variant was detected in {df.frecuencia[row]}% of patients studied by a panel of primary immunodeficiencies. Number of patients: {df.cantidad_pacientes[row]}. Only high quality variants are reported."
 df_Variant.Gene_symbol=df.gen
 df_Variant.CS_citations=""
 df_ExpEvidence.HGVS=df.HGVS
@@ -95,7 +98,7 @@ df_ExpEvidence.Allele_origin='germline'
 df_ExpEvidence.Affected_status='no'
 df_ExpEvidence.Sex='mixed'
 df_ExpEvidence.Age_range='<18'
-df_ExpEvidence.N_individuals=df.n_pacientes
+df_ExpEvidence.N_individuals=df.cantidad_pacientes
 df_ExpEvidence.Collection_method='clinical testing'
 
 

@@ -4,6 +4,12 @@
 ___
 
 
+#### Scripts Disponibles
+
+___
+
+
+
 * VariantsToTable
   * **Objetivo**
     * Filtrar campos de uno o varios archivos vcf y transformarlos a tsv.
@@ -19,7 +25,7 @@ ___
   * **Ejemplo para ingresar el path del archivo desde la terminal**
       ```
       bash VariantsToTable_v1.0.bash
-              Presionar Enter
+              -- Presionar Enter
       archivos/HG00405_degvcf_intervar.vcf
       ```
 
@@ -43,7 +49,10 @@ ____
   * **Requerimientos**
     * python versión 3.8 o superior
     * Paquetes: argparse, datetime, pandas, os y mygene
-      * Para instalarlos ```pip install <Nombre del Paquete>```
+      * Para instalarlos 
+      ```
+      pip install <Nombre del Paquete>
+      ```
   * **Ejemplo**
       ```
       python3 TablaDiseno_v1.0.py -i archivos/listado_beds.tsv
@@ -81,7 +90,10 @@ ____
   * **Requerimientos**
     * python versión 3.8 o superior
     * Paquetes: argparse, datetime, glob, numpy, pandas y os
-      * Para instalarlos ```pip install <Nombre del Paquete>```
+      * Para instalarlos
+      ```
+      pip install <Nombre del Paquete>
+      ```
   * **Ejemplo**
       ```
       python3 TablaVariantesCalidadClinVar_v1.0.py -i /home/user/foo -clinvar 240404 -dis 1
@@ -89,6 +101,59 @@ ____
 
 
 ____
+
+
+* NormalizacionNomenclatura
+  * **Objetivo**
+    * A partir del archivo exportado de la base de datos con las variantes filtradas para reportar, se actualiza y/o corrige la nomenclatura del transcripto para ser reportada a ClinVar 
+  * **Input**                     _Correr el script con la opción --help para más detalles_
+    * Archivo exportado desde la base de datos con las variantes que cumplen con el criterio de selección
+  * **Output**
+    * Archivo final con la nomenclatura revisada
+      * \<Archivo Input\>_ref_\<fecha\>.csv
+  * **Requerimientos**
+    * Paquetes: argparse, datetime, os, pandas, re, requests, tqdm
+    * Para instalarlos
+      ```
+      pip install <Nombre del Paquete>
+      ```
+  * **Ejemplo**
+      ```
+      python3 NormalizacionNomenclatura_v1.0.py -i archivos/resultado_Todos_XGen_2023.txt
+      ```
+      * Archivios Output:
+        * archivos/resultado_Todos_XGen_2023_norm_20240407_1927.csv
+
+____
+
+
+* CargaTemplate
+  * **Objetivo**
+    * Completar el Templado de ClinVar con las variantes seleccionadas.
+  * **Input**                     _Correr el script con la opción --help para más detalles_
+    * Archivo con las variantes a reportar y su nomenclatura actualizada
+    * Templado versión Lite de ClinVar
+  * **Output**
+    * Templado completo con las variantes a reportar y la información obligatoria
+      * Template_Lite_\<Archivo Input\>_\<fecha\>.xlsx
+    * Variantes que no pueden ser reportadas automáticamente
+      * Rejected_\<Archivo Input\>_\<fecha\>.csv 
+  * **Requerimientos**
+    * Paquetes: argparse, datetime, openpyxl, os, pandas, shutil
+    * Para instalarlos
+      ```
+      pip install <Nombre del Paquete>
+      ```
+  * **Ejemplo**
+      ```
+      python3 CargaTemplate_v1.0.py -i archivos/resultado_Todos_XGen_2023_norm_20240407_1927.csv -t archivos/SubmissionTemplateLite.xlsx
+      ```
+      * Archivios Output:
+        * archivos/Template_Lite_resultado_20240407_1959.xlsx
+        * archivos/Rejected_20240407_1938.csv
+      
+____
+
 
 
 * TablaActualizacion
@@ -104,7 +169,10 @@ ____
       * tabla_calidades-\<submissionID\>-\<fecha\>.csv
   * **Requerimientos**
     * Paquetes: argparse, datetime, pandas, os
-    * Para instalarlos ```pip install <Nombre del Paquete>```
+    * Para instalarlos:
+      ```
+      pip install <Nombre del Paquete>
+      ```
   * **Ejemplo**
       ```
       python3 TablaActualizacion_v1.0.py -i archivos/listado_beds.tsv
@@ -113,41 +181,28 @@ ____
 ____
 
 
-* NormalizacionNomenclatura
-  * **Objetivo**
-    * A partir del archivo exportado de la base de datos con las variantes filtradas para reportar, se actualiza y/o corrige la nomenclatura del transcripto para ser reportada a ClinVar 
-  * **Input**                     _Correr el script con la opción --help para más detalles_
-    * Archivo exportado desde la base de datos con las variantes que cumplen con el criterio de selección
-  * **Output**
-    * Resultado_{panel}_{date_file}.csv
-  * **Requerimientos**
-    * Paquetes: argparse, datetime, os, pandas, re, requests, tqdm
-    * Para instalarlos ```pip install <Nombre del Paquete>```
-  * **Ejemplo**
-      ```
-      python3 NormalizacionNomenclatura_v1.0.py -i archivos/listado_beds.tsv
-      ```
+#### Archivos Disponibles
 
-____
+___
 
+Archivos iniciales:
 
-* CargaTemplate
-  * **Objetivo**
-    * Completar el Templado de ClinVar con las variantes seleccionadas.
-  * **Input**                     _Correr el script con la opción --help para más detalles_
-    * Archivo con las variantes a reportar y su nomenclatura actualizada\
-    * Templado versión Lite de ClinVar
-  * **Output**
-    * Templado completo con las variantes a reportar y la información obligatoria
-  * **Requerimientos**
-    * Paquetes: argparse, datetime, openpyxl, os, pandas, shutil
-    * Para instalarlos ```pip install <Nombre del Paquete>```
-  * **Ejemplo**
-      ```
-      python3 CargaTemplate_v1.0.py -i archivos/listado_beds.tsv
-      ```
+* Esquema_BD
+  * Esquema de la base de datos diseñada.
 
-      
-____
+* HG00405_degvcf_intervar
+  * Archivo con variantes descargado de 1000 Genomes Project y subseteado para el cromosoma 3
 
+* listado_beds
+  * Archivo que simula cómo debería ser el archivo que contenga los datos para generar el input para la tabla diseños a cargar en la base de datos.
 
+* xgen-exome-hyb-panel-v2-targets-hg38_chr3
+  * Ejemplo de un archivo bed subseteado en el cromosoma 3.
+
+* resultado_Todos_XGen_2023
+  * Ejemplo de archivo de salida de consulta de la base de datos para reportar a ClinVar
+
+* SubmissionTemplateLite
+  * Archivo molde para subir variantes a ClinVar.
+
+___
