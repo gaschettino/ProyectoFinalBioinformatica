@@ -4,7 +4,11 @@
 ___
 
 
-#### Scripts Disponibles
+#### Scripts 
+
+___
+
+Esta sección proporciona una descripción de todos los scripts cargados en el repositorio.
 
 ___
 
@@ -181,28 +185,35 @@ ____
 ____
 
 
-#### Archivos Disponibles
+#### Archivos
 
+___
+
+___
+<h2 align="center">Archivos</h2>
+
+
+Esta sección proporciona una descripción de los archivos contenidos en la carpeta archivos de este repositorio.
 ___
 
 Archivos iniciales:
 
 * Esquema_BD
-  * Esquema de la base de datos diseñada.
+  * Contiene el esquema de la base de datos diseñada.
 
 * HG00405_degvcf_intervar
-  * Archivo con variantes descargado de 1000 Genomes Project y subseteado para el cromosoma 3
+  * Archivo de variantes genéticas obtenido del proyecto 1000 Genomes Project. Este ha sido subseteado para el cromosoma 3 para facilitar las operaciones.
 
 * listado_beds
-  * Archivo que simula cómo debería ser el archivo que contenga los datos para generar el input para la tabla diseños a cargar en la base de datos.
+  * Simula el formato y contenido esperado del archivo que proveerá los datos necesarios para generar el input requerido por la tabla diseno a ser cargada en la base de datos.
 
 * xgen-exome-hyb-panel-v2-targets-hg38_chr3
-  * Ejemplo de un archivo bed subseteado en el cromosoma 3.
+  * Representa un ejemplo de archivo BED, ajustado para operaciones en el cromosoma 3.
 
 * resultado_Todos_XGen_2023
-  * Ejemplo de archivo de salida de consulta de la base de datos para reportar a ClinVar
+  * Muestra un ejemplo de los archivos de salida que pueden ser generados tras consultar a la base de datos con el script FiltradoPacientes.sql.
 
 * SubmissionTemplateLite
-  * Archivo molde para subir variantes a ClinVar.
+  * Plantilla diseñada por ClinVar para la carga de información a partir del Subission Portal.
 
 ___
