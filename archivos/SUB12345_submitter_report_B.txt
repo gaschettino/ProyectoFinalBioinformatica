@@ -1,0 +1,31 @@
+##ClinVar report of published submitted records (SCVs) in SUB13973738
+##Organization: Unidad de Genómica Garrahan, Hospital de Pediatría Garrahan
+##Date: 2023-11-21
+##Explanation of the columns in this report
+#Your_variant_id                                    The local ID you may have submitted for the reported allele. May be null.
+#VariationID                                        ClinVar's Variation ID (see https://www.ncbi.nlm.nih.gov/clinvar/docs/identifiers/#ids). This is the identifier used to build the URL to the variation page, e.g. https://ncbi.nlm.nih.gov/clinvar/variation/9
+#AlleleID                                           ClinVar's Allele ID (see https://www.ncbi.nlm.nih.gov/clinvar/docs/identifiers/#ids). SCVs for a haplotype or genotype have a list of Allele IDs.
+#Your_record_id                                     The linking ID/local key you may have submitted for the variant-condition pair. May be null.
+#SCV                                                The accession number assigned by ClinVar to your submitted interpretation of the variant-condition pair.
+#RCV                                                The accession assigned by ClinVar to the aggregation of your submitted record with other submitted records for the same variant-condition pair.
+#Your_variant_description_HGVS                      The HGVS description you provided for the variant in this record. This column may be null if you submitted chromosome coordinates instead of HGVS.  SCVs for a haplotype or genotype have a concatenated list of variant descriptions.
+#Your_variant_description_chromosome_coordinates    The chromosome coordinates description you provided for the variant in this record. This column may be null if you submitted HGVS instead of chromosome coordinates.  SCVs for a haplotype or genotype have a concatenated list of variant descriptions. Cytogenetic descriptions are also reported in this column.
+#Preferred_variant_name                             The preferred name that ClinVar calculated for the Variation ID. This name is shown on the ClinVar web site in search results and as the title on the variation page.
+#Your_condition_name                                The name you submitted for the interpreted condition. May be null if you submitted a database identifier instead.
+#Your_condition_identifier                          The database identifier you submitted for the interpreted condition. May be null if you submitted a name instead.
+#ClinVar_condition_name                             The preferred condition name in ClinVar.
+#Assigned_Concept_ID                                The MedGen Concept ID (CUI) for the preferred condition name in ClinVar. May be null.
+#Clinical_significance                              Your submitted interpretation for the variation-condition pair.
+#Date_last_evaluated                                Your report of the last date you evaluated the variation-condition pair. May be null.
+#Assertion_criteria                                 The name of the assertion criteria you provided for this record. May be null.
+#Submission_date                                    The date of your latest published submission for this record.
+#Submitted_gene                                     The gene symbol you provided for the submitted variant. May be null.
+#Novelty                                            The contribution your initial submission made relative to other records in ClinVar. (new allele|existing allele; new phenotype for this allele|existing combination of allele and phenotype)
+#Status                                             The status of the SCV being reported. (current, delete, secondary)
+#Info                                               Information about this record relative to other data at NCBI. They are not considered errors; they indicate data that you may want to review. May be null.
+#Your_variant_id	VariationID	AlleleID	Your_record_id	SCV	RCV	Your_variant_description_HGVS	Your_variant_description_chromosome_coordinates	Preferred_variant_name	Your_condition_name	Your_condition_identifier	ClinVar_condition_name	Assigned_Concept_ID	Clinical_significance	Date_last_evaluated	Assertion_criteria	Submission_date	Submitted_gene	Novelty	Status	Info
+	22222	33333		SCV0000000001		NC_000003.12:g.16271057C>T		NC_000003.12:g.16271057C>T	not specified		not specified	CN000001	Benign	11/14/23	ACMG Guidelines, 2015	11/15/23	OXNAD1	existing allele; new phenotype	current	
+	22223	33334		SCV0000000002		NC_000003.12:g.38039461T>G		NC_000003.12:g.38039461T>G	not specified		not specified	CN000002	Benign	11/15/23	ACMG Guidelines, 2016	11/16/23	DLEC1	existing allele; new phenotype	current	
+	22224	33335		SCV0000000003		NC_000003.12:g.38366870G>A		NC_000003.12:g.38366870G>A	not specified		not specified	CN000003	Benign	11/16/23	ACMG Guidelines, 2017	11/17/23	XYLB	existing allele; new phenotype	current	
+	22225	33336		SCV0000000004		NC_000003.12:g.42209837C>T		NC_000003.12:g.42209837C>T	not specified		not specified	CN000004	Benign	11/17/23	ACMG Guidelines, 2018	11/18/23	TRAK1	existing allele; new phenotype	current	
+	22226	33337		SCV0000000005		NC_000003.12:g.42865620A>C		NC_000003.12:g.42865620A>C	not specified		not specified	CN000005	Benign	11/18/23	ACMG Guidelines, 2019	11/19/23	ACKR2	existing allele; new phenotype	current	

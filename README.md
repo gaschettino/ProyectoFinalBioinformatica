@@ -111,7 +111,7 @@ ____
   * **Objetivo**
     * A partir del archivo exportado de la base de datos con las variantes filtradas para reportar, se actualiza y/o corrige la nomenclatura del transcripto para ser reportada a ClinVar 
   * **Input**                     _Correr el script con la opción --help para más detalles_
-    * Archivo exportado desde la base de datos con las variantes que cumplen con el criterio de selección
+    * Archivo exportado desde la base de datos con las variantes que cumplen con el criterio de selección (Exportado realizando la consulta del archivo filtrado_poblacional.sql disponible en la carpeta archivos)
   * **Output**
     * Archivo final con la nomenclatura revisada
       * \<Archivo Input\>_ref_\<fecha\>.csv
@@ -135,7 +135,7 @@ ____
   * **Objetivo**
     * Completar el Templado de ClinVar con las variantes seleccionadas.
   * **Input**                     _Correr el script con la opción --help para más detalles_
-    * Archivo con las variantes a reportar y su nomenclatura actualizada
+    * Archivo con las variantes a reportar y su nomenclatura actualizada (output de NormalizacionNomenclatura)
     * Templado versión Lite de ClinVar
   * **Output**
     * Templado completo con las variantes a reportar y la información obligatoria
@@ -164,8 +164,8 @@ ____
   * **Objetivo**
     * Generar tres archivos para la carga de las tablas: ClinVar, Variantes y ReporteVariantes 
   * **Input**                     _Correr el script con la opción --help para más detalles_
-    * Submitter Report generado por ClinVar
-    * Reporte enviado a ClinVar.
+    * Submitter report generado por ClinVar
+    * Archivo de variantes a reportar a ClinVar normalizado (output de NormalizacionNomenclatura).
   * **Output**
     * Archivos de cada una de las tablas generadas
       * tabla_clinvar-\<submissionID\>-\<fecha\>.csv
@@ -179,7 +179,7 @@ ____
       ```
   * **Ejemplo**
       ```
-      python3 TablaActualizacion_v1.0.py -i archivos/listado_beds.tsv
+      python3 python3 TablaActualizacion_v1.0.py -i1 archivos/SUB12345_submitter_report_B.txt -i2 archivos/output/resultado_Todos_XGen_2023_norm_20240407_1927.csv -o archivos/output
       ```
 
 ____
@@ -208,5 +208,11 @@ ___
 
 * SubmissionTemplateLite
   * Plantilla diseñada por ClinVar para la carga de información a partir del Subission Portal.
+
+* SUB12345_submitter_report_B
+  * Archivo que simula el reporte generado por ClinVar luego de aceptar las variantes en su base de datos.
+
+* filtrado_poblacional
+  * Consulta mysql que filtra las variantes de un diseño determinado en base a ser una variante con DP >=50, con Filtro de PASS y estar presente en más del 20% de los individuos estudiados.
 
 ___
