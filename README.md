@@ -151,7 +151,7 @@ ____
       ```
   * **Ejemplo**
       ```
-      python3 CargaTemplate_v1.0.py -i archivos/resultado_Todos_XGen_2023_norm_20240407_1927.csv -t archivos/SubmissionTemplateLite.xlsx
+      python3 CargaTemplate_v1.0.py -i archivos/output/resultado_Todos_XGen_2023_norm_20240407_1927.csv -t archivos/SubmissionTemplateLite.xlsx
       ```
       
 
