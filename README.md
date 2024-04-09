@@ -178,7 +178,7 @@ ____
       ```
   * **Ejemplo**
       ```
-      python3 python3 TablaActualizacion_v1.0.py -i1 archivos/SUB12345_submitter_report_B.txt -i2 archivos/output/resultado_Todos_XGen_2023_norm_20240407_1927.csv -o archivos/output
+      python3 TablaActualizacion_v1.0.py -i1 archivos/SUB12345_submitter_report_B.txt -i2 archivos/output/resultado_Todos_XGen_2023_norm_20240407_1927.csv -o archivos/output
       ```
 
 
