@@ -13,8 +13,8 @@ Esta sección proporciona una descripción de todos los scripts cargados en el r
 ___
 
 
+<h3 align="left">VariantsToTable</h3>
 
-* VariantsToTable
   * **Objetivo**
     * Filtrar campos de uno o varios archivos vcf y transformarlos a tsv.
   * **Input**
@@ -37,8 +37,8 @@ ___
 
 ____
 
+<h3 align="left">TablaDiseno</h3>
 
-* TablaDiseno
   * **Objetivo** 
     * Generar a partir de un archivo tsv un archivo para importar en la base de datos la tabla Diseno.
   * **Input**                          _Correr el script con la opción --help para más detalles_
@@ -67,8 +67,8 @@ ____
 
 ____
 
+<h3 align="left">TablaVariantesCalidadClinVar</h3>
 
-* TablaVariantesCalidadClinVar
   * **Objetivo** 
     * Generar a partir de los archivos separados por tab generados con el script VariantsToTable 3 tablas para importar en la base de datos Variantes, Calidades y ClinVar.
   * **Input**                          _Correr el script con la opción --help para más detalles_
@@ -108,8 +108,8 @@ ____
 
 ____
 
+<h3 align="left">NormalizacionNomenclatura</h3>
 
-* NormalizacionNomenclatura
   * **Objetivo**
     * A partir del archivo exportado de la base de datos con las variantes filtradas para reportar, se actualiza y/o corrige la nomenclatura del transcripto para ser reportada a ClinVar 
   * **Input**                     _Correr el script con la opción --help para más detalles_
@@ -131,8 +131,8 @@ ____
 
 ____
 
-
-* CargaTemplate
+<h3 align="left">CargaTemplate</h3>
+ 
   * **Objetivo**
     * Completar el Templado de ClinVar con las variantes seleccionadas.
   * **Input**                     _Correr el script con la opción --help para más detalles_
@@ -158,8 +158,8 @@ ____
 ____
 
 
+<h3 align="left">TablaActualizacion</h3>
 
-* TablaActualizacion
   * **Objetivo**
     * Generar tres archivos para la carga de las tablas: ClinVar, Variantes y ReporteVariantes 
   * **Input**                     _Correr el script con la opción --help para más detalles_
