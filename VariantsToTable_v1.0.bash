@@ -2,7 +2,7 @@
 
 ## Agregar el path al archivo local.jar de GATK
 declare -A tools=(
-  ["GATK"]=""
+  ["GATK"]="/mnt/c/Users/giovi/Ubuntu/tools/gatk-4.5.0.0/gatk-package-4.5.0.0-local.jar"
   )
 
 echo -e -n "Seleccionar archivo que contiene path de los vcfs a convertir. \n * Si se quiere ingresar la lista por terminal, apretar enter. \n"
@@ -42,7 +42,7 @@ if [[ $PASO == '1' ]]
                exit
           else
                INPUT=$filepath
-               PATIENT=$(basename ${INPUT%.vcf*})
+               PATIENT=$(basename ${INPUT%_degvcf_intervar.vcf*})
                OUTPATH=$(dirname $INPUT)/VTT_OUT
                LOGPATH=$(dirname $INPUT)/VTT_LOG
                mkdir -p $LOGPATH $OUTPATH
@@ -62,7 +62,7 @@ elif [[ $PASO == '2' ]]
      else
           echo "Entra al else"
           INPUT=$filepath
-          PATIENT=$(basename ${INPUT%.vcf*}) 
+          PATIENT=$(basename ${INPUT%_degvcf_intervar.vcf*}) 
           OUTPATH=$(dirname $INPUT)/VTT_OUT
           LOGPATH=$(dirname $INPUT)/VTT_LOG
           mkdir -p $LOGPATH $OUTPATH
