@@ -32,6 +32,51 @@ parser.add_argument('-f3', dest='file3', required=False, type=str, default="", h
 parser.add_argument('-ref', dest='ref', required=False, default='hg38', help='Opcional: Genoma de referencia utilizado. Valor por default: hg38\n')
 
 args = parser.parse_args()
+
+# =============================================================================
+# args = argparse.Namespace(
+#     initialpath='/home/usuario/Downloads/BaseDeDatos2024/Exomas',
+#     clinvar='2024-01-15',
+#     dis='21',
+#     out1=False,
+#     paso2=False,
+#     out2='',
+#     paso3=False,
+#     file3='',
+#     ref='hg38'
+# )
+# 
+# =============================================================================
+def transformar_genotipo(gt, ref, alt):
+    if '/' in gt:
+        alelos=gt.split('/')
+    elif '|' in gt:
+        alelos=gt.split('|')
+    if alelos[0] == ref: 
+        if alelos[1] == ref:
+            return '0/0'
+        elif alelos[1] == alt:
+            return '0/1'
+    elif alelos[1] == ref: 
+        if alelos[0] == alt:
+            return '0/1'
+    elif alelos[0] == alt and alelos[1] == alt :
+        return '1/1'
+
+    elif alelos[0] == '.':
+        if alelos[1] == ref:
+            return './0'
+        elif alelos[1] == alt:
+            return './1'
+    elif alelos[1] == '.':
+        if alelos[0] == ref:
+            return './0'
+        elif alelos[0] == alt:
+            return './1'
+    else:
+        return './.'
+
+
 dt_string = datetime.now().strftime("%Y%m%d_%H.%M.%S")
 
 dirpath=f"{args.initialpath}/BD_{dt_string}"
@@ -63,8 +108,10 @@ if not args.paso2 and not args.paso3:
     
     list_df=[]
     for file in variants_list:
-      samplename=file.replace("_VariantsToTable_final.txt", "")
-      df = pd.read_table(file, sep="\t", header=0)
+      samplename=file.replace("_degvcf_intervar_VariantsToTable_final.txt", "")
+      samplename=samplename.replace("_Step9", "")      
+      df = pd.read_table(file, sep="\t", header=0, dtype={'CHROM': str})
+
       # df.columns=["CHROM", "POS", "ID", "REF", "ALT", "FILTER", "SNPEFF_GENE_ID", "VARTYPE", "CLNSIG", "CLNHGVS", "set", "SNPEFF_EFF", "AD", "AO", "DP", "GQ", "GT", "NR", "NV", "PL", "RO"]
       df.columns=["CHROM", "POS", "ID", "REF", "ALT", "FILTER", "SNPEFF_GENE_ID", "VARTYPE", "CLNSIG", "CLNHGVS", "set", "AD", "AO", "DP", "GQ", "GT", "NR", "NV", "PL", "RO"]
             
@@ -88,6 +135,7 @@ elif args.paso2 and not args.paso3:
 elif args.paso3:
     print(f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Leyendo el archivo salteando el paso 1 y el paso 2')
     df_concat=pd.read_csv(args.file3)
+
 '''
 Campo Allele Depth
 
@@ -97,6 +145,7 @@ Campo Allele Depth
 
 HaplotypeCaller, DeepVariant y SamTools cumplen con estas características  
 '''
+
 
 if not args.paso3:
     print(f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Paso 2')
@@ -113,7 +162,9 @@ if not args.paso3:
     
     df_concat['Ref_depth'] = df_concat['RO'].fillna(df_concat['Ref_depth'])
     df_concat['Alt_depth'] = df_concat['AO'].fillna(df_concat['Alt_depth'])
-    
+    df_concat['Ref_depth'] = pd.to_numeric(df_concat['Ref_depth'], errors='coerce').astype('Int64')
+    df_concat['Alt_depth'] = pd.to_numeric(df_concat['Alt_depth'], errors='coerce').astype('Int64')
+
     
     '''
     Platypus
@@ -141,11 +192,13 @@ if not args.paso3:
     '''
     Si hubieran quedado valores con alternativo Y referencia de 0 se elimina la linea.
     '''
-    
+    df_concat[df_concat.ALT.str.contains(',')]
     df_eliminar=df_concat[(df_concat.Ref_depth == 0) & (df_concat.Alt_depth == 0)]
     
     df_concat.drop(df_eliminar.index, inplace=True)
     
+    df_eliminar=df_concat[df_concat.ALT.str.contains(',')]
+    df_concat.drop(df_eliminar.index, inplace=True)
     
     '''
     Si algun valor de profundidad es NaN los elimino.
@@ -166,7 +219,9 @@ if not args.paso3:
     df_eliminar=df_concat[df_concat['NV'].astype('str').str.contains(',', na=False)]
     df_concat.drop(df_eliminar.index, inplace=True)
     
-    
+    df_eliminar=df_concat[(df_concat.Ref_depth.isna() | df_concat.Alt_depth.isna())]
+    df_concat.drop(df_eliminar.index, inplace=True)
+
     '''
     Armo una columna según el llamador que la detecta.
     '''
@@ -186,7 +241,7 @@ if not args.paso3:
     Asigno el nombre de corrida y el nombre del paciente
     '''
     
-    df_concat['Corrida'] = df_concat['Patient'].str.split(r'[\\/]').str[-2]
+    df_concat['Corrida'] = df_concat['Patient'].str.split(r'[\\/]').str[-3]
     df_concat['Patient'] = df_concat['Patient'].str.split(r'[\\/]').str[-1]
     
     '''
@@ -209,7 +264,11 @@ Agrego una carpeta para guardar las tablas comunes dentro de la carpeta output.
 
 outputtablas=f"{dirpath}/Tablas_"+dt_string+"/"
 os.mkdir(outputtablas)
-
+print(len(df_concat))
+df_concat=df_concat[df_concat['REF'].str.len()<256]
+print(len(df_concat))
+df_concat=df_concat[df_concat['ALT'].str.len()<256]
+print(len(df_concat))
 
 '''
 Armado de la Tabla Clinvar
@@ -273,7 +332,7 @@ tabla_variantes.alternativo=df_concat.ALT
 tabla_variantes.tipo=df_concat.VARTYPE
 tabla_variantes.gen=df_concat.SNPEFF_GENE_ID
 tabla_variantes.id_clinvar=df_concat.id_Clinvar
-tabla_variantes.id_clinvar.fillna(0,inplace=True)
+tabla_variantes.id_clinvar=tabla_variantes.id_clinvar.fillna(0)
 # tabla_variantes['efecto'] = df_concat['SNPEFF_EFF'].str.replace(r"(\s*\(.*?\)\s*)", " ").str.strip().str.replace(' ', '')
 # tabla_variantes['efecto']=tabla_variantes['efecto'].str.split(',').apply(lambda x : ','.join(set(x)))
 
@@ -293,6 +352,8 @@ Armado de la Tabla Calidades
 
 print(f'{datetime.now().strftime("%Y%m%d %H:%M:%S")} - Tabla Calidades')
 
+df_concat['GT_transformado'] = df_concat.apply(lambda row: transformar_genotipo(row['GT'], row['REF'], row['ALT']), axis=1)
+
 tabla_calidades=pd.DataFrame(columns=["id_genomica","id_corrida","id_diseno","ref_build","cromosoma","posicion","referencia","alternativo","GT","reads_ref","reads_alt","DP","filter","haplotypecaller","freebayes","samtools","platypus","deepvariant","created_at"])
 
 tabla_calidades.id_genomica=df_concat.Patient
@@ -304,11 +365,11 @@ tabla_calidades.posicion=df_concat.POS
 tabla_calidades.referencia=df_concat.REF
 tabla_calidades.alternativo=df_concat.ALT
 
-tabla_calidades.GT=df_concat.GT
-tabla_calidades.reads_ref=df_concat.Ref_depth.fillna(df_concat.RO).fillna(df_concat.NR.astype('float')-df_concat.NV.astype('float'))
-tabla_calidades.reads_alt=df_concat.Alt_depth.fillna(df_concat.AO).fillna(df_concat.NV)
-tabla_calidades.DP=df_concat.DP.fillna(df_concat.NR)
-tabla_calidades.filter=df_concat.FILTER.str.replace(",","-")
+tabla_calidades.GT=df_concat.GT_transformado
+tabla_calidades.reads_ref=df_concat.Ref_depth
+tabla_calidades.reads_alt=df_concat.Alt_depth
+tabla_calidades.DP=df_concat.DP
+tabla_calidades["filter"]=df_concat.FILTER.str.replace(",","-")
 tabla_calidades.haplotypecaller=df_concat.HaplotypeCaller
 tabla_calidades.freebayes=df_concat.FreeBayes
 tabla_calidades.samtools=df_concat.SamTools
@@ -318,3 +379,6 @@ tabla_calidades.deepvariant=df_concat.DeepVariant
 filename=outputtablas + 'tabla_calidades-' + dt_string + '.csv'
 
 tabla_calidades.to_csv(filename, index=False)
+
+
+tmp=tabla_calidades.sample()
