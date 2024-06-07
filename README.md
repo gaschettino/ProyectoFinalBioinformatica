@@ -61,7 +61,7 @@ ____
       ```
   * **Ejemplo**
       ```
-      python3 TablaDiseno_v1.0.py -i archivos/listado_beds.tsv
+      python3 TablaDiseno_v1.1.py -i archivos/listado_beds.tsv
       ```
 
 
@@ -102,7 +102,7 @@ ____
       ```
   * **Ejemplo**
       ```
-      python3 TablaVariantesCalidadClinVar_v1.0.py -i /home/user/foo -clinvar 240404 -dis 1
+      python3 TablaVariantesCalidadClinVar_v1.1.py -i /home/user/foo -clinvar 240404 -dis 1
       ```
 
 
