@@ -74,7 +74,7 @@ tabla_clinvar=pd.DataFrame(columns=["id_clinvar", "CLNSIG", "CLNHGVS", "clinvar_
 
 
 tabla_clinvar.id_clinvar=df.VariationID
-tabla_clinvar.CLNSIG=df.Clinical_significance
+tabla_clinvar.CLNSIG=df.Germline_classification
 tabla_clinvar.CLNHGVS=df.Your_variant_description_HGVS
 tabla_clinvar.clinvar_date=fecha
 
@@ -95,6 +95,9 @@ variantes.drop_duplicates(subset=["ref_build","cromosoma","posicion","referencia
 
 clinvar=tabla_clinvar[["id_clinvar", 'CLNHGVS']]
 resultado = pd.merge(variantes, clinvar, left_on='HGVS', right_on='CLNHGVS', how='inner')
+
+resultado = resultado[["ref_build", "cromosoma", "posicion", "referencia", "alternativo", "id_clinvar"]]
+resultado["created_at"]=''
 
 filename=f"{outputtablas}/tabla_variantes2-{SUB_ID}-{date_file}.csv"
 resultado.to_csv(filename, index=False)
