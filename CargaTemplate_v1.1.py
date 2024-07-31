@@ -102,12 +102,14 @@ df.gen=df.gen.replace("DDX58",'RIGI')
 reemplazar=control_genes(df)
 df.gen.replace(reemplazar, '', inplace=True)
 
-conteo=df.value_counts("CLNSIG")
-conteo.to_csv(distribucion_reportado, index=True)
 
-incluidos=["Conflicting_interpretations_of_pathogenicity", "Benign", 'Likely_benign', 'Dummy', 'Benign/Likely_benign', "Uncertain_significance"]
+incluidos=["Conflicting_interpretations_of_pathogenicity", "Benign", 'Likely_benign', 'Dummy', 'Benign/Likely_benign', "Uncertain_significance", "Conflicting_classifications_of_pathogenicity"]
 df_incluidos=df[df.CLNSIG.isin(incluidos)]
 df_excluidos=df[~df.CLNSIG.isin(incluidos)]
+
+conteo=df_incluidos.value_counts("CLNSIG")
+conteo.to_csv(distribucion_reportado, index=True)
+
 
 df=df_incluidos.copy()
 df.reset_index(drop=True, inplace=True)
